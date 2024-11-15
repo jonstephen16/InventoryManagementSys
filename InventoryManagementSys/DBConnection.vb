@@ -108,6 +108,36 @@ Module DBConnection
         End If
     End Function
 
+    Public Function getMaxNumberSales()
+        Try
+            If (MyCon.State = ConnectionState.Open) Then
+                MyCon.Close()
+            End If
+            MyCon.Open()
+            MyCommand.Connection = MyCon
+            MyCommand.CommandText = "SELECT MAX(SalesID) AS MAX_NUM FROM sales"
+            MyAdapter.SelectCommand = MyCommand
+            Dim MYSQLData As MySqlDataReader = MyCommand.ExecuteReader
+            MYSQLData.Read()
+            If Not MYSQLData.IsDBNull(0) Then
+                num = Convert.ToInt32(MYSQLData("MAX_NUM"))
+            Else
+                num = 0
+            End If
+            MyCon.Close()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+
+        End Try
+
+        If num = 1 Then
+            getMaxNumberSales = 1
+        Else
+            'getMaxNumber = ((num - 1) + 1)
+            getMaxNumberSales = num
+        End If
+    End Function
+
 
 
 End Module

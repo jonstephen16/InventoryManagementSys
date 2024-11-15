@@ -46,7 +46,7 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.btnExit)
         Me.Panel1.Location = New System.Drawing.Point(-2, 0)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(463, 66)
         Me.Panel1.TabIndex = 0
@@ -84,7 +84,7 @@ Partial Class Form1
         Me.btnExit.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExit.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.btnExit.Location = New System.Drawing.Point(408, 6)
-        Me.btnExit.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnExit.Margin = New System.Windows.Forms.Padding(2)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(45, 51)
         Me.btnExit.TabIndex = 0
@@ -96,7 +96,7 @@ Partial Class Form1
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.Panel2.Controls.Add(Me.Label5)
         Me.Panel2.Location = New System.Drawing.Point(-2, 251)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(463, 29)
         Me.Panel2.TabIndex = 1
@@ -141,7 +141,7 @@ Partial Class Form1
         'txtUser
         '
         Me.txtUser.Location = New System.Drawing.Point(219, 115)
-        Me.txtUser.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtUser.Margin = New System.Windows.Forms.Padding(2)
         Me.txtUser.Name = "txtUser"
         Me.txtUser.Size = New System.Drawing.Size(177, 20)
         Me.txtUser.TabIndex = 5
@@ -149,7 +149,7 @@ Partial Class Form1
         'txtPassword
         '
         Me.txtPassword.Location = New System.Drawing.Point(219, 161)
-        Me.txtPassword.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtPassword.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPassword.Size = New System.Drawing.Size(177, 20)
@@ -176,7 +176,7 @@ Partial Class Form1
         '
         Me.PictureBox1.Image = Global.InventoryManagementSys.My.Resources.Resources.tin1
         Me.PictureBox1.Location = New System.Drawing.Point(53, 99)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(115, 113)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -199,7 +199,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Form1"

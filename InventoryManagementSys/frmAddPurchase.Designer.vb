@@ -56,6 +56,8 @@ Partial Class frmAddPurchase
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txtTotalAmount = New System.Windows.Forms.TextBox()
+        Me.cboStatus = New System.Windows.Forms.ComboBox()
+        Me.lblStatus = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -395,11 +397,36 @@ Partial Class frmAddPurchase
         Me.txtTotalAmount.Size = New System.Drawing.Size(120, 20)
         Me.txtTotalAmount.TabIndex = 50
         '
+        'cboStatus
+        '
+        Me.cboStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.cboStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cboStatus.FormattingEnabled = True
+        Me.cboStatus.Items.AddRange(New Object() {"Pending", "Received", "Cancelled"})
+        Me.cboStatus.Location = New System.Drawing.Point(539, 394)
+        Me.cboStatus.Name = "cboStatus"
+        Me.cboStatus.Size = New System.Drawing.Size(107, 21)
+        Me.cboStatus.TabIndex = 52
+        '
+        'lblStatus
+        '
+        Me.lblStatus.AutoSize = True
+        Me.lblStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStatus.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.lblStatus.Location = New System.Drawing.Point(487, 397)
+        Me.lblStatus.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblStatus.Name = "lblStatus"
+        Me.lblStatus.Size = New System.Drawing.Size(47, 13)
+        Me.lblStatus.TabIndex = 51
+        Me.lblStatus.Text = "Status:"
+        '
         'frmAddPurchase
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(749, 426)
+        Me.Controls.Add(Me.cboStatus)
+        Me.Controls.Add(Me.lblStatus)
         Me.Controls.Add(Me.txtTotalAmount)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.btnDelete)
@@ -471,4 +498,6 @@ Partial Class frmAddPurchase
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Label11 As Label
     Friend WithEvents txtTotalAmount As TextBox
+    Friend WithEvents cboStatus As ComboBox
+    Friend WithEvents lblStatus As Label
 End Class

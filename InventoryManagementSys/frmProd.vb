@@ -53,8 +53,9 @@ Public Class frmProd
         Try
             searchQuery = txtSearch.Text.Trim
             MyCon.Open()
-            Dim command As New MySqlCommand("SELECT ProductID as `PRODUCT ID`, Sku as `SKU`, P.Name as `NAME`, Category as `CATEGORY`, SellingPrice as `SELLING PRICE`, Unit as `UNIT`, S.Name as `STATUS`, IF(DateUpdated IS NULL, DateCreated, DateUpdated) as `LAST DATE UPDATED` FROM `products` as P  INNER JOIN status as S ON S.StatusID = P.Status WHERE P.Name LIKE '%" & searchQuery & "%' OR P.ProductID = '" & searchQuery & "'", MyCon)
+            Dim command As New MySqlCommand("SELECT ProductID as `PRODUCT ID`, Sku as `SKU`, P.Name as `NAME`, Category as `CATEGORY`, SellingPrice as `SELLING PRICE`, Unit as `UNIT`, S.Name as `STATUS`, IF(DateUpdated IS NULL, DateCreated, DateUpdated) as `LAST DATE UPDATED` FROM `products` as P  INNER JOIN status as S ON S.StatusID = P.Status WHERE P.Name LIKE @search OR P.Sku LIKE @search ", MyCon)
             Dim adapter As New MySqlDataAdapter(command)
+            command.Parameters.AddWithValue("@search", "%" & searchQuery & "%")
             Dim table As New DataTable()
             adapter.Fill(table)
             DataGridView1.DataSource = table

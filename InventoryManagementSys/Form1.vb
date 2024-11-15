@@ -1,7 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class Form1
     Public Property sessionUser As New Dictionary(Of String, Object)
-    Public Shared ReadOnly roles() As String = {"", "Admin", "Manager", "Staff"}
+    Public Shared ReadOnly roles() As String = {"", "Admin", "Manager", "Staff", "Owner"}
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Application.Exit()
@@ -17,6 +17,7 @@ Public Class Form1
                 MsgBox("Enter username.", MsgBoxStyle.Critical, "Required")
                 txtUser.BackColor = Color.FromArgb(240, 240, 20)
                 txtUser.Select()
+
                 Exit Sub
             ElseIf (txtPassword.Text = "") Then
                 MsgBox("Enter password.", MsgBoxStyle.Critical, "Required")
@@ -35,6 +36,7 @@ Public Class Form1
                 Dim MySQLData As MySqlDataReader = MyCommand.ExecuteReader
 
                 If MySQLData.HasRows = 0 Then '1
+
 
                     If counter = 3 Then
                         MessageBox.Show("You have reached your maximum login attempts. The program will now end.", "Error Login!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -106,4 +108,9 @@ Public Class Form1
         Return strResult
 
     End Function
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        txtUser.Select()
+
+    End Sub
 End Class
