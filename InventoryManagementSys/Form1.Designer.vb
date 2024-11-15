@@ -45,9 +45,10 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.btnExit)
-        Me.Panel1.Location = New System.Drawing.Point(-3, 0)
+        Me.Panel1.Location = New System.Drawing.Point(-2, 0)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(694, 102)
+        Me.Panel1.Size = New System.Drawing.Size(463, 66)
         Me.Panel1.TabIndex = 0
         '
         'Label4
@@ -55,9 +56,10 @@ Partial Class Form1
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.SystemColors.AppWorkspace
-        Me.Label4.Location = New System.Drawing.Point(38, 55)
+        Me.Label4.Location = New System.Drawing.Point(25, 36)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(253, 17)
+        Me.Label4.Size = New System.Drawing.Size(188, 13)
         Me.Label4.TabIndex = 1
         Me.Label4.Text = "GroupName, Legazpi City, Albay, 4500"
         '
@@ -66,9 +68,10 @@ Partial Class Form1
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label3.Location = New System.Drawing.Point(37, 26)
+        Me.Label3.Location = New System.Drawing.Point(25, 17)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(341, 26)
+        Me.Label3.Size = New System.Drawing.Size(238, 18)
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "Inventory Management System"
         '
@@ -80,9 +83,10 @@ Partial Class Form1
         Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExit.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExit.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnExit.Location = New System.Drawing.Point(612, 10)
+        Me.btnExit.Location = New System.Drawing.Point(408, 6)
+        Me.btnExit.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnExit.Name = "btnExit"
-        Me.btnExit.Size = New System.Drawing.Size(68, 78)
+        Me.btnExit.Size = New System.Drawing.Size(45, 51)
         Me.btnExit.TabIndex = 0
         Me.btnExit.Text = "X"
         Me.btnExit.UseVisualStyleBackColor = False
@@ -91,9 +95,10 @@ Partial Class Form1
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.Panel2.Controls.Add(Me.Label5)
-        Me.Panel2.Location = New System.Drawing.Point(-3, 386)
+        Me.Panel2.Location = New System.Drawing.Point(-2, 251)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(694, 45)
+        Me.Panel2.Size = New System.Drawing.Size(463, 29)
         Me.Panel2.TabIndex = 1
         '
         'Label5
@@ -101,9 +106,10 @@ Partial Class Form1
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.SystemColors.AppWorkspace
-        Me.Label5.Location = New System.Drawing.Point(576, 15)
+        Me.Label5.Location = New System.Drawing.Point(384, 10)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(92, 17)
+        Me.Label5.Size = New System.Drawing.Size(69, 13)
         Me.Label5.TabIndex = 2
         Me.Label5.Text = "Version 1.0.0"
         '
@@ -113,9 +119,10 @@ Partial Class Form1
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label1.Location = New System.Drawing.Point(322, 153)
+        Me.Label1.Location = New System.Drawing.Point(215, 99)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(101, 20)
+        Me.Label1.Size = New System.Drawing.Size(71, 13)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Username: "
         '
@@ -124,25 +131,28 @@ Partial Class Form1
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label2.Location = New System.Drawing.Point(322, 224)
+        Me.Label2.Location = New System.Drawing.Point(215, 146)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(96, 20)
+        Me.Label2.Size = New System.Drawing.Size(69, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Password: "
         '
         'txtUser
         '
-        Me.txtUser.Location = New System.Drawing.Point(328, 177)
+        Me.txtUser.Location = New System.Drawing.Point(219, 115)
+        Me.txtUser.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.txtUser.Name = "txtUser"
-        Me.txtUser.Size = New System.Drawing.Size(264, 26)
+        Me.txtUser.Size = New System.Drawing.Size(177, 20)
         Me.txtUser.TabIndex = 5
         '
         'txtPassword
         '
-        Me.txtPassword.Location = New System.Drawing.Point(328, 248)
+        Me.txtPassword.Location = New System.Drawing.Point(219, 161)
+        Me.txtPassword.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(264, 26)
+        Me.txtPassword.Size = New System.Drawing.Size(177, 20)
         Me.txtPassword.TabIndex = 6
         '
         'btnLogin
@@ -154,10 +164,10 @@ Partial Class Form1
         Me.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnLogin.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLogin.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnLogin.Location = New System.Drawing.Point(389, 299)
+        Me.btnLogin.Location = New System.Drawing.Point(259, 194)
         Me.btnLogin.Margin = New System.Windows.Forms.Padding(0)
         Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(134, 38)
+        Me.btnLogin.Size = New System.Drawing.Size(89, 25)
         Me.btnLogin.TabIndex = 7
         Me.btnLogin.Text = "Login"
         Me.btnLogin.UseVisualStyleBackColor = False
@@ -165,20 +175,21 @@ Partial Class Form1
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.InventoryManagementSys.My.Resources.Resources.tin1
-        Me.PictureBox1.Location = New System.Drawing.Point(80, 153)
+        Me.PictureBox1.Location = New System.Drawing.Point(53, 99)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(172, 174)
+        Me.PictureBox1.Size = New System.Drawing.Size(115, 113)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 2
         Me.PictureBox1.TabStop = False
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(219, Byte), Integer), CType(CType(211, Byte), Integer), CType(CType(211, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(687, 431)
+        Me.ClientSize = New System.Drawing.Size(458, 280)
         Me.Controls.Add(Me.btnLogin)
         Me.Controls.Add(Me.txtPassword)
         Me.Controls.Add(Me.txtUser)
@@ -188,6 +199,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Form1"

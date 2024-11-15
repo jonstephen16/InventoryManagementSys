@@ -78,6 +78,35 @@ Module DBConnection
         End If
     End Function
 
+    Public Function getMaxNumberPurchase()
+        Try
+            If (MyCon.State = ConnectionState.Open) Then
+                MyCon.Close()
+            End If
+            MyCon.Open()
+            MyCommand.Connection = MyCon
+            MyCommand.CommandText = "SELECT MAX(PurchaseID) AS MAX_NUM FROM purchases"
+            MyAdapter.SelectCommand = MyCommand
+            Dim MYSQLData As MySqlDataReader = MyCommand.ExecuteReader
+            MYSQLData.Read()
+            If Not MYSQLData.IsDBNull(0) Then
+                num = Convert.ToInt32(MYSQLData("MAX_NUM"))
+            Else
+                num = 0
+            End If
+            MyCon.Close()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+
+        End Try
+
+        If num = 1 Then
+            getMaxNumberPurchase = 1
+        Else
+            'getMaxNumber = ((num - 1) + 1)
+            getMaxNumberPurchase = num
+        End If
+    End Function
 
 
 

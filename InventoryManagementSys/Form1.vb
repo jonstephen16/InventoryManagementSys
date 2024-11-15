@@ -8,6 +8,9 @@ Public Class Form1
     End Sub
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        If MyCon.State = ConnectionState.Open Then
+            MyCon.Close()
+        End If
         Try
             Static Dim counter As Integer
             If (txtUser.Text = "") Then
@@ -24,7 +27,10 @@ Public Class Form1
                 counter = counter + 1 '3
                 MyCon.Open()
                 MyCommand.Connection = MyCon
-                MyCommand.CommandText = "SELECT *  FROM users WHERE Username='" & txtUser.Text.Trim & "' AND Password='" & getSHA1Hash(txtPassword.Text) & "'"
+                MyCommand.CommandText = "SELECT *  FROM users WHERE Username=@username AND Password=@password"
+                MyCommand.Parameters.Clear()
+                MyCommand.Parameters.AddWithValue("@username", txtUser.Text.Trim)
+                MyCommand.Parameters.AddWithValue("@password", getSHA1Hash(txtPassword.Text))
                 MyAdapter.SelectCommand = MyCommand
                 Dim MySQLData As MySqlDataReader = MyCommand.ExecuteReader
 
@@ -81,14 +87,6 @@ Public Class Form1
             MsgBox(ex.Message)
 
         End Try
-
-    End Sub
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
-
-    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
 
     End Sub
 

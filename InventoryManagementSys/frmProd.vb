@@ -36,7 +36,7 @@ Public Class frmProd
     End Sub
 
     Private Function ValidateFields() As Boolean
-        Return Not (String.IsNullOrEmpty(txtId.Text) Or String.IsNullOrEmpty(txtProdname.Text) Or String.IsNullOrEmpty(txtDescription.Text) Or cboCategory.SelectedItem Is Nothing Or String.IsNullOrEmpty(txtPrice.Text) Or cboUnit.SelectedItem Is Nothing)
+        Return Not (String.IsNullOrEmpty(txtId.Text) Or String.IsNullOrEmpty(txtSku.Text) Or String.IsNullOrEmpty(txtProdname.Text) Or cboCategory.SelectedItem Is Nothing Or String.IsNullOrEmpty(txtPrice.Text) Or cboUnit.SelectedItem Is Nothing)
     End Function
 
     Private Sub ClearFields()
