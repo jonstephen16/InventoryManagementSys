@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2024 at 07:11 AM
+-- Generation Time: Nov 17, 2024 at 12:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -60,7 +60,7 @@ INSERT INTO `categories` (`CategoryID`, `Name`, `Status`) VALUES
 
 CREATE TABLE `products` (
   `ProductID` int(11) NOT NULL,
-  `Sku` varchar(255) DEFAULT NULL,
+  `Sku` varchar(255) NOT NULL,
   `Name` varchar(255) NOT NULL,
   `Description` text DEFAULT NULL,
   `Category` varchar(255) NOT NULL,
@@ -78,7 +78,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`ProductID`, `Sku`, `Name`, `Description`, `Category`, `SellingPrice`, `Unit`, `Status`, `CreatedBy`, `DateCreated`, `UpdatedBy`, `DateUpdated`) VALUES
-(1, 'PROD-2024-0001', 'Prod1upd', 'asd', 'CHARGER', 100.00, 'PCS', 1, 1, '2024-11-15 02:08:34', 1, '2024-11-15 02:08:43');
+(1, 'PROD-2024-0001', 'BLACK ELITE 8000 - Battery', '', 'Battery', 250.00, 'pcs', 1, 1, '2024-11-16 01:35:35', NULL, NULL),
+(2, 'PROD-2024-0002', 'BLACK ELITE 8000 - Mixed Berries', '', 'Juiceline', 300.00, 'pcs', 1, 1, '2024-11-16 01:36:17', NULL, NULL),
+(3, 'PROD-2024-0003', 'BLACK ELITE 8000 - Yakult', '', 'Juiceline', 300.00, 'pcs', 1, 1, '2024-11-16 01:36:48', 1, '2024-11-16 01:37:31'),
+(4, 'PROD-2024-0004', 'BLACK LITE 8000 - Taro Ice', '', 'Juiceline', 300.00, 'pcs', 1, 1, '2024-11-16 01:38:19', NULL, NULL),
+(5, 'PROD-2024-0005', 'BLACK ELITE 8000 - Watermelon', '', 'Juiceline', 300.00, 'pcs', 1, 1, '2024-11-16 03:33:44', NULL, NULL),
+(6, 'PROD-2024-0006', 'BLACK ELITE 8000 - Black Currant', '', 'Juiceline', 300.00, 'pcs', 1, 1, '2024-11-16 03:42:44', NULL, NULL),
+(7, 'PROD-2024-0007', 'BLACK ELITE 8000 - Strawberry', '', 'Juiceline', 300.00, 'pcs', 1, 1, '2024-11-16 16:47:18', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -91,6 +97,7 @@ CREATE TABLE `purchases` (
   `ReferenceNo` varchar(255) NOT NULL,
   `Amount` decimal(20,2) NOT NULL,
   `Description` text DEFAULT NULL,
+  `Status` int(11) NOT NULL DEFAULT 4,
   `CreatedBy` int(11) NOT NULL,
   `DateCreated` datetime NOT NULL DEFAULT current_timestamp(),
   `UpdatedBy` int(11) DEFAULT NULL,
@@ -113,8 +120,45 @@ CREATE TABLE `purchase_products` (
   `Status` int(11) NOT NULL DEFAULT 1,
   `CreatedBy` int(11) NOT NULL,
   `DateCreated` datetime NOT NULL DEFAULT current_timestamp(),
-  `UpdatedBy` int(11) NOT NULL,
-  `DateUpdated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp()
+  `UpdatedBy` int(11) DEFAULT NULL,
+  `DateUpdated` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales`
+--
+
+CREATE TABLE `sales` (
+  `SalesID` int(11) NOT NULL,
+  `ReferenceNo` varchar(255) NOT NULL,
+  `Amount` decimal(20,2) NOT NULL,
+  `Description` text NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT 4,
+  `CreatedBy` int(11) NOT NULL DEFAULT 1,
+  `DateCreated` int(11) NOT NULL DEFAULT current_timestamp(),
+  `UpdatedBy` int(11) DEFAULT NULL,
+  `DateUpdated` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_products`
+--
+
+CREATE TABLE `sales_products` (
+  `ID` int(11) NOT NULL,
+  `SalesID` int(11) NOT NULL,
+  `ProductID` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `UnitPrice` decimal(20,2) NOT NULL,
+  `TotalAmount` decimal(20,2) NOT NULL,
+  `CreatedBy` int(11) NOT NULL DEFAULT 1,
+  `DateCreated` datetime NOT NULL DEFAULT current_timestamp(),
+  `UpdatedBy` int(11) DEFAULT NULL,
+  `DateUpdated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -134,8 +178,12 @@ CREATE TABLE `status` (
 
 INSERT INTO `status` (`StatusID`, `Name`) VALUES
 (1, 'Active'),
+(6, 'Cancelled'),
+(7, 'Completed'),
 (3, 'Deleted'),
-(2, 'Inactive');
+(2, 'Inactive'),
+(4, 'Pending'),
+(5, 'Received');
 
 -- --------------------------------------------------------
 
@@ -147,8 +195,6 @@ CREATE TABLE `stocks` (
   `StockID` int(11) NOT NULL,
   `ProductID` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL,
-  `UnitID` int(11) NOT NULL,
-  `Price` decimal(20,2) NOT NULL,
   `CreatedBy` int(11) NOT NULL,
   `DateCreated` datetime NOT NULL DEFAULT current_timestamp(),
   `UpdatedBy` int(11) DEFAULT NULL,
@@ -172,8 +218,7 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`UnitID`, `Name`, `Status`) VALUES
-(1, 'pcs', 1),
-(2, 'box', 1);
+(1, 'pcs', 1);
 
 -- --------------------------------------------------------
 
@@ -224,7 +269,8 @@ CREATE TABLE `user_roles` (
 INSERT INTO `user_roles` (`UserRoleID`, `Name`, `Status`) VALUES
 (1, 'Administrator', 1),
 (2, 'Manager', 1),
-(3, 'Staff', 1);
+(3, 'Staff', 1),
+(4, 'Owner', 1);
 
 -- --------------------------------------------------------
 
@@ -253,18 +299,33 @@ ALTER TABLE `categories`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`ProductID`);
+  ADD PRIMARY KEY (`ProductID`),
+  ADD UNIQUE KEY `UniqueSkuNameProducts` (`Sku`,`Name`) USING BTREE;
 
 --
 -- Indexes for table `purchases`
 --
 ALTER TABLE `purchases`
-  ADD PRIMARY KEY (`PurchaseID`);
+  ADD PRIMARY KEY (`PurchaseID`),
+  ADD UNIQUE KEY `UniqueReferenceNoSales` (`ReferenceNo`) USING BTREE;
 
 --
 -- Indexes for table `purchase_products`
 --
 ALTER TABLE `purchase_products`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `sales`
+--
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`SalesID`),
+  ADD UNIQUE KEY `UniqueReferenceNoSales` (`ReferenceNo`);
+
+--
+-- Indexes for table `sales_products`
+--
+ALTER TABLE `sales_products`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -278,7 +339,8 @@ ALTER TABLE `status`
 -- Indexes for table `stocks`
 --
 ALTER TABLE `stocks`
-  ADD PRIMARY KEY (`StockID`);
+  ADD PRIMARY KEY (`StockID`),
+  ADD UNIQUE KEY `UniqueProductIDStocks` (`ProductID`) USING BTREE;
 
 --
 -- Indexes for table `units`
@@ -318,7 +380,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -333,10 +395,22 @@ ALTER TABLE `purchase_products`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `SalesID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sales_products`
+--
+ALTER TABLE `sales_products`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `StatusID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `StatusID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `stocks`
@@ -360,7 +434,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `UserRoleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `UserRoleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_session_logs`

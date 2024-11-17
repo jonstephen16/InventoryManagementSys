@@ -19,9 +19,7 @@ Public Class frmViewSales
 
     Private Sub frmViewSales_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadData()
-        cboStatus.Items.Add("Pending")
-        cboStatus.Items.Add("Received")
-        cboStatus.Items.Add("Cancelled")
+        cboStatus.Items.Add("Completed")
     End Sub
 
     Public Sub LoadData(Optional searchQuery As String = "", Optional searchStatus As String = "")
@@ -33,11 +31,17 @@ Public Class frmViewSales
             If Not cboStatus.SelectedItem Is Nothing Then
                 query = query & " AND e.Name = @status "
             End If
+            If Form1.roles(Form1.sessionUser("UserRoleID")) = "Staff" Then
+                query = query & " AND a.CreatedBy = @createdby "
+            End If
             query = query & " GROUP BY a.SalesID"
             Dim command As New MySqlCommand(query, MyCon)
             command.Parameters.AddWithValue("@search", "%" & searchQuery & "%")
             If Not cboStatus.SelectedItem Is Nothing Then
                 command.Parameters.AddWithValue("@status", searchStatus)
+            End If
+            If Form1.roles(Form1.sessionUser("UserRoleID")) = "Staff" Then
+                command.Parameters.AddWithValue("@createdby", Form1.sessionUser("UserRoleID"))
             End If
             Dim adapter As New MySqlDataAdapter(command)
             Dim table As New DataTable()
@@ -59,7 +63,7 @@ Public Class frmViewSales
         getSalesID(True)
     End Sub
 
-    Private Sub btnUpdateStatus_Click(sender As Object, e As EventArgs) Handles btnUpdateStatus.Click
+    Private Sub btnUpdateStatus_Click(sender As Object, e As EventArgs)
         action = "update status"
         getSalesID(True)
     End Sub
@@ -77,17 +81,19 @@ Public Class frmViewSales
         Next
 
 
-        If ((status = "Pending") Or (status <> "Pending" And action = "view")) Then
-            If showForm Then
-                frmSales.Show()
-            Else
-                If action = "delete" Then
-                    deleteSales()
-                End If
-            End If
+        'If ((status = "Pending") Or (status <> "Pending" And action = "view")) Then
+        If showForm Then
+            frmSales.Show()
         Else
-            MessageBox.Show("Pending Sales Order is allowed to update", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            If action = "delete" And status <> "Completed" Then
+                deleteSales()
+            Else
+                MessageBox.Show("Unable to delete completed orders.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
         End If
+        'Else
+        '
+        'End If
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click

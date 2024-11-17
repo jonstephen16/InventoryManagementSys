@@ -33,7 +33,6 @@ Partial Class frmViewSales
         Me.cboStatus = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.btnUpdateStatus = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.btnView = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
@@ -68,7 +67,7 @@ Partial Class frmViewSales
         Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDelete.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnDelete.Location = New System.Drawing.Point(575, 77)
+        Me.btnDelete.Location = New System.Drawing.Point(678, 77)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(59, 23)
@@ -122,7 +121,7 @@ Partial Class frmViewSales
         Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdd.ForeColor = System.Drawing.Color.Black
-        Me.btnAdd.Location = New System.Drawing.Point(423, 77)
+        Me.btnAdd.Location = New System.Drawing.Point(526, 77)
         Me.btnAdd.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(46, 23)
@@ -137,7 +136,7 @@ Partial Class frmViewSales
         Me.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnUpdate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnUpdate.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnUpdate.Location = New System.Drawing.Point(525, 77)
+        Me.btnUpdate.Location = New System.Drawing.Point(628, 77)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
         Me.btnUpdate.Size = New System.Drawing.Size(46, 23)
@@ -173,21 +172,6 @@ Partial Class frmViewSales
         Me.Label2.TabIndex = 47
         Me.Label2.Text = "Reference No:"
         '
-        'btnUpdateStatus
-        '
-        Me.btnUpdateStatus.BackColor = System.Drawing.Color.Transparent
-        Me.btnUpdateStatus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnUpdateStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnUpdateStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnUpdateStatus.ForeColor = System.Drawing.Color.Black
-        Me.btnUpdateStatus.Location = New System.Drawing.Point(636, 77)
-        Me.btnUpdateStatus.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnUpdateStatus.Name = "btnUpdateStatus"
-        Me.btnUpdateStatus.Size = New System.Drawing.Size(104, 23)
-        Me.btnUpdateStatus.TabIndex = 46
-        Me.btnUpdateStatus.Text = "Update Status"
-        Me.btnUpdateStatus.UseVisualStyleBackColor = False
-        '
         'DataGridView1
         '
         Me.DataGridView1.AllowUserToAddRows = False
@@ -207,7 +191,7 @@ Partial Class frmViewSales
         Me.btnView.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnView.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnView.ForeColor = System.Drawing.Color.Black
-        Me.btnView.Location = New System.Drawing.Point(473, 77)
+        Me.btnView.Location = New System.Drawing.Point(576, 77)
         Me.btnView.Margin = New System.Windows.Forms.Padding(2)
         Me.btnView.Name = "btnView"
         Me.btnView.Size = New System.Drawing.Size(48, 23)
@@ -229,7 +213,6 @@ Partial Class frmViewSales
         Me.Controls.Add(Me.cboStatus)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.btnUpdateStatus)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.btnView)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -255,7 +238,6 @@ Partial Class frmViewSales
     Friend WithEvents cboStatus As ComboBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents btnUpdateStatus As Button
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents btnView As Button
 End Class

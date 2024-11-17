@@ -1,4 +1,7 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.ComponentModel.Design
+Imports Google.Protobuf.WellKnownTypes
+Imports System.Xml
+Imports MySql.Data.MySqlClient
 
 Public Class frmSales
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
@@ -18,9 +21,8 @@ Public Class frmSales
         Label1.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(frmViewSales.action) & " " & Label1.Text
         If frmViewSales.action = "add" Then
             txtID.Text = Convert.ToInt32(getMaxNumberSales()) + 1
-            lblStatus.Visible = False
-            cboStatus.Visible = False
             generateRefNo()
+            cboStatus.SelectedIndex = cboStatus.FindStringExact("Completed")
         ElseIf frmViewSales.action = "view" Then
             Integer.TryParse(frmViewSales.salesID, salesID)
             txtID.Text = frmViewSales.salesID
@@ -32,8 +34,6 @@ Public Class frmSales
             Integer.TryParse(frmViewSales.salesID, salesID)
             txtID.Text = frmViewSales.salesID
             loadSalesOrder(salesID)
-            lblStatus.Visible = False
-            cboStatus.Visible = False
         ElseIf frmViewSales.action = "update status" Then
             Integer.TryParse(frmViewSales.salesID, salesID)
             txtID.Text = frmViewSales.salesID
@@ -62,15 +62,24 @@ Public Class frmSales
 
         MyCon.Open()
         Dim command As New MySqlCommand("SELECT 
-                a.ProductID as `PRODUCT ID`, b.Sku as `SKU`, b.Name as `PRODUCT NAME`, b.Category as `CATEGORY`, a.Quantity as `QUANTITY`, b.Unit as `UNIT`, a.UnitPrice as `PRICE`
+                a.ProductID, b.Sku, b.Name, b.Category, a.Quantity, b.Unit, a.UnitPrice 
                 FROM sales_products as a INNER JOIN products as b ON a.ProductID=b.ProductID WHERE a.SalesID = @id", MyCon)
         command.Parameters.Clear()
         command.Parameters.AddWithValue("@id", id)
-        Dim adapter As New MySqlDataAdapter(command)
-        Dim table As New DataTable()
-        adapter.Fill(table)
-        DataGridView1.Columns.Clear()
-        DataGridView1.DataSource = table
+        MyAdapter.SelectCommand = command
+        Using MySQLData As MySqlDataReader = command.ExecuteReader
+            While MySQLData.Read()
+                Me.DataGridView1.Rows.Add(
+                    MySQLData("ProductID").ToString(),
+                    MySQLData("Sku").ToString(),
+                    MySQLData("Name").ToString(),
+                    MySQLData("Category").ToString(),
+                    MySQLData("Quantity").ToString(),
+                    MySQLData("Unit").ToString(),
+                    MySQLData("UnitPrice").ToString())
+                calculateTotalAmount()
+            End While
+        End Using
         MyCon.Close()
 
     End Sub
@@ -316,14 +325,37 @@ Public Class frmSales
                 If MyCon.State = ConnectionState.Open Then
                     MyCon.Close()
                 End If
+
+                'check ref no exist
+                Dim refExist As Boolean = False
+                MyCon.Open()
+                Dim command As New MySqlCommand("SELECT ReferenceNo FROM sales WHERE ReferenceNo = @refno", MyCon)
+                command.Parameters.Clear()
+                command.Parameters.AddWithValue("@id", txtID.Text)
+                command.Parameters.AddWithValue("@refno", txtRefNo.Text)
+                MyAdapter.SelectCommand = command
+                Using MySQLData As MySqlDataReader = command.ExecuteReader
+                    If MySQLData.HasRows Then
+                        refExist = True
+                    End If
+                End Using
+                MyCon.Close()
+
+                If refExist Then
+                    MessageBox.Show("Reference No is already exists", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    Exit Sub
+                End If
+
+                Dim status As Int32 = Array.IndexOf(Form1.status, cboStatus.Text)
                 MyCon.Open()
                 MyCommand.Connection = MyCon
-                MyCommand.CommandText = "INSERT INTO `sales` ( SalesID, ReferenceNo, Amount, Description, Status, CreatedBy) VALUES (@id, @refno, @amount, @description, 4, @createdby)"
+                MyCommand.CommandText = "INSERT INTO `sales` ( ReferenceNo, Amount, Description, Status, CreatedBy) VALUES (@refno, @amount, @description, @status, @createdby)"
                 MyCommand.Parameters.Clear()
-                MyCommand.Parameters.AddWithValue("@id", txtID.Text)
+                'MyCommand.Parameters.AddWithValue("@id", txtID.Text)
                 MyCommand.Parameters.AddWithValue("@refno", txtRefNo.Text.Trim)
                 MyCommand.Parameters.AddWithValue("@amount", txtTotalAmount.Text.Trim)
                 MyCommand.Parameters.AddWithValue("@description", txtDescription.Text.Trim)
+                MyCommand.Parameters.AddWithValue("@status", status)
                 MyCommand.Parameters.AddWithValue("@createdby", Form1.sessionUser("UserID"))
                 MyAdapter.InsertCommand = MyCommand
                 Dim result As Integer = MyCommand.ExecuteNonQuery()
@@ -357,7 +389,208 @@ Public Class frmSales
                     MyCon.Close()
                 Next
             ElseIf frmViewSales.action = "update" Then
-                MessageBox.Show("Process update")
+                'Process update sales 
+
+                'check ref no exist
+                Dim refExist As Boolean = False
+                MyCon.Open()
+                Dim command As New MySqlCommand("SELECT ReferenceNo FROM sales WHERE ReferenceNo = @refno AND SalesID!=@id", MyCon)
+                command.Parameters.Clear()
+                command.Parameters.AddWithValue("@id", txtID.Text)
+                command.Parameters.AddWithValue("@refno", txtRefNo.Text)
+                MyAdapter.SelectCommand = command
+                Using MySQLData As MySqlDataReader = command.ExecuteReader
+                    If MySQLData.HasRows Then
+                        refExist = True
+                    End If
+                End Using
+                MyCon.Close()
+
+                'if oldstatus not completed and updated is completed check stocks
+
+
+                If String.IsNullOrEmpty(txtRefNo.Text) Then
+                    MessageBox.Show("Reference No is empty", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                ElseIf refExist Then
+                    MessageBox.Show("Reference No is already exist", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                ElseIf DataGridView1.RowCount = 0 Then
+                    MessageBox.Show("Product Table is empty", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Else
+
+                    Dim oldstatus As String = ""
+                    Dim oldstatusID As Integer = 0
+                    MyCon.Open()
+                    Dim command1 As New MySqlCommand("SELECT Status FROM sales WHERE SalesID=@id", MyCon)
+                    command1.Parameters.Clear()
+                    command1.Parameters.AddWithValue("@id", txtID.Text)
+                    MyAdapter.SelectCommand = command1
+                    Using MySQLData As MySqlDataReader = command1.ExecuteReader
+                        While MySQLData.Read()
+                            Integer.TryParse(MySQLData("Status").ToString(), oldstatusID)
+                            oldstatus = Form1.status(oldstatusID)
+                        End While
+                    End Using
+                    MyCon.Close()
+
+                    Dim toReturnStock As New List(Of Dictionary(Of String, String))()
+                    If oldstatus = "Completed" Then
+                        MyCon.Open()
+                        Dim commandS As New MySqlCommand("SELECT * FROM sales_products WHERE SalesID=@id", MyCon)
+                        commandS.Parameters.Clear()
+                        commandS.Parameters.AddWithValue("@id", txtID.Text)
+                        MyAdapter.SelectCommand = commandS
+                        Using MySQLData As MySqlDataReader = commandS.ExecuteReader
+                            While MySQLData.Read()
+                                toReturnStock.Add(New Dictionary(Of String, String)() From {
+                                    {"id", MySQLData("ProductID").ToString()},
+                                    {"qty", MySQLData("Quantity").ToString()}
+                                })
+                            End While
+                        End Using
+                        MyCon.Close()
+                    End If
+
+                    For Each value As Dictionary(Of String, String) In toReturnStock
+                        Dim id As String = value("id")
+                        Dim qty As String = value("qty")
+                        returnStocks(id, qty)
+                    Next
+
+                    Dim status As Int32 = Array.IndexOf(Form1.status, cboStatus.Text)
+                    MyCon.Open()
+                    MyCommand.Connection = MyCon
+                    MyCommand.CommandText = "UPDATE `sales` SET ReferenceNo = @refno, Amount = @amount, Description = @desc, Status = @status, UpdatedBy = @updatedby WHERE SalesID = @id"
+                    MyCommand.Parameters.Clear()
+                    MyCommand.Parameters.AddWithValue("@id", txtID.Text)
+                    MyCommand.Parameters.AddWithValue("@refno", txtRefNo.Text.Trim)
+                    MyCommand.Parameters.AddWithValue("@amount", txtTotalAmount.Text.Trim)
+                    MyCommand.Parameters.AddWithValue("@desc", txtDescription.Text.Trim)
+                    MyCommand.Parameters.AddWithValue("@status", status)
+                    MyCommand.Parameters.AddWithValue("@updatedby", Form1.sessionUser("UserID"))
+                    MyAdapter.UpdateCommand = MyCommand
+                    Dim result As Integer = MyCommand.ExecuteNonQuery()
+                    MyCon.Close()
+
+                    If result Then
+                        Dim newProdID() As String = {}
+                        Dim prodNotIn As String = "("
+                        For Each row In DataGridView1.Rows
+                            newProdID = newProdID.Concat({row.Cells(0).Value}).ToArray
+                            Dim quantity As Integer = 0
+                            Dim priceAmt As Double = 0
+                            Dim totalAmount As Double = 0
+                            Integer.TryParse(row.Cells(4).Value, quantity)
+                            Double.TryParse(row.Cells(6).Value, priceAmt)
+                            totalAmount = quantity * priceAmt
+
+                            If Not MyCon.State = ConnectionState.Open Then
+                                MyCon.Open()
+                            End If
+
+                            Dim prodExist As Boolean = False
+                            Dim commandPE As New MySqlCommand("SELECT SalesID, ProductID FROM sales_products WHERE SalesID = @id AND ProductID = @prodid", MyCon)
+                            commandPE.Parameters.Clear()
+                            commandPE.Parameters.AddWithValue("@id", txtID.Text)
+                            commandPE.Parameters.AddWithValue("@prodid", row.Cells(0).Value)
+                            MyAdapter.SelectCommand = commandPE
+                            Using MySQLData As MySqlDataReader = commandPE.ExecuteReader
+                                If MySQLData.HasRows Then
+                                    prodExist = True
+                                End If
+                            End Using
+                            MyCon.Close()
+
+                            If prodExist Then
+                                'update if exist
+                                If Not MyCon.State = ConnectionState.Open Then
+                                    MyCon.Open()
+                                End If
+                                MyCommand.CommandText = "UPDATE `sales_products` SET Quantity = @qty, UnitPrice = @price, TotalAmount = @total, UpdatedBy = @updatedby WHERE SalesID = @id AND ProductID = @prodid"
+                                MyCommand.Parameters.Clear()
+                                MyCommand.Parameters.AddWithValue("@id", txtID.Text)
+                                MyCommand.Parameters.AddWithValue("@prodid", row.Cells(0).Value)
+                                MyCommand.Parameters.AddWithValue("@qty", row.Cells(4).Value)
+                                MyCommand.Parameters.AddWithValue("@price", row.Cells(6).Value)
+                                MyCommand.Parameters.AddWithValue("@total", totalAmount)
+                                MyCommand.Parameters.AddWithValue("@updatedby", Form1.sessionUser("UserID"))
+                                MyAdapter.UpdateCommand = MyCommand
+                                MyCommand.ExecuteNonQuery()
+                                MyCon.Close()
+                            Else
+                                If Not MyCon.State = ConnectionState.Open Then
+                                    MyCon.Open()
+                                End If
+                                'Insert if not exist
+                                MyCommand.CommandText = "INSERT INTO `sales_products` ( SalesID, ProductID, Quantity, UnitPrice, TotalAmount, CreatedBy) 
+                                            VALUES (@id, @prodid, @qty, @price, @total, @createdby)"
+                                MyCommand.Parameters.Clear()
+                                MyCommand.Parameters.AddWithValue("@id", txtID.Text)
+                                MyCommand.Parameters.AddWithValue("@prodid", row.Cells(0).Value)
+                                MyCommand.Parameters.AddWithValue("@qty", row.Cells(4).Value)
+                                MyCommand.Parameters.AddWithValue("@price", row.Cells(6).Value)
+                                MyCommand.Parameters.AddWithValue("@total", totalAmount)
+                                MyCommand.Parameters.AddWithValue("@createdby", Form1.sessionUser("UserID"))
+                                MyAdapter.InsertCommand = MyCommand
+                                MyCommand.ExecuteNonQuery()
+                                MyCon.Close()
+                            End If
+
+                            If cboStatus.Text = "Completed" Then
+                                Dim existStock As Boolean = False
+                                If Not MyCon.State = ConnectionState.Open Then
+                                    MyCon.Open()
+                                End If
+                                MyCommand.CommandText = "SELECT * FROM stocks WHERE ProductID = @prodid LIMIT 1"
+                                MyCommand.Parameters.Clear()
+                                MyCommand.Parameters.AddWithValue("@prodid", row.Cells(0).Value)
+                                MyAdapter.SelectCommand = MyCommand
+                                Using MySQLData As MySqlDataReader = MyCommand.ExecuteReader
+                                    If MySQLData.HasRows Then
+                                        existStock = True
+                                    End If
+                                End Using
+                                MyCon.Close()
+
+                                If existStock Then
+                                    MyCon.Open()
+                                    MyCommand.CommandText = "UPDATE stocks SET Quantity = Quantity - @qty, UpdatedBy=@updatedby WHERE ProductID = @prodid"
+                                    MyCommand.Parameters.Clear()
+                                    MyCommand.Parameters.AddWithValue("@qty", row.Cells(4).Value)
+                                    MyCommand.Parameters.AddWithValue("@updatedby", Form1.sessionUser("UserID"))
+                                    MyCommand.Parameters.AddWithValue("@prodid", row.Cells(0).Value)
+                                    MyAdapter.UpdateCommand = MyCommand
+                                    MyCommand.ExecuteNonQuery()
+                                    MyCon.Close()
+                                Else
+                                    MessageBox.Show("Unable to update product stocks.", "Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                End If
+                            End If
+                        Next
+
+                        For Each id In newProdID
+                            If prodNotIn = "(" Then
+                                prodNotIn = prodNotIn & id
+                            Else
+                                prodNotIn = prodNotIn & "," & id
+                            End If
+                        Next
+                        prodNotIn = prodNotIn & ")"
+
+                        'delete old sales products 
+                        If prodNotIn <> "()" Then
+                            MessageBox.Show(prodNotIn)
+                            MyCon.Open()
+                            MyCommand.CommandText = "DELETE FROM sales_products WHERE SalesID = '" & txtID.Text & "' AND ProductID NOT IN " & prodNotIn
+                            MyAdapter.DeleteCommand = MyCommand
+                            MyCommand.ExecuteNonQuery()
+                            MyCon.Close()
+                        End If
+
+                        MessageBox.Show("Sales Order has been updated.", "Save Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    End If
+                End If
+
             ElseIf frmViewSales.action = "update status" Then
 
                 If cboStatus.Text = "Received" Then
@@ -424,7 +657,7 @@ Public Class frmSales
             Dim countNum As Integer
             Dim appendNum As String
 
-            Dim ddate As String = Date.Today.Year
+            Dim ddate As String = Date.Today.Year & Date.Today.Month
             num = Convert.ToInt32(getMaxNumberSales()) + 1 '1
             Dim a As Byte
             countNum = num.ToString.Length
@@ -439,5 +672,30 @@ Public Class frmSales
             MsgBox(ex.Message)
         End Try
     End Sub
+
+    Private Function returnStocks(prodid As String, qty As String) As Boolean
+        Dim success As Boolean = True
+        Try
+            MyCon.Open()
+            Integer.TryParse(qty, qty)
+            MyCommand.CommandText = "UPDATE stocks SET Quantity = Quantity + @qty, UpdatedBy = @updatedby WHERE ProductID=@prodid"
+            MyCommand.Parameters.Clear()
+            MyCommand.Parameters.AddWithValue("@prodid", prodid)
+            MyCommand.Parameters.AddWithValue("@qty", qty)
+            MyCommand.Parameters.AddWithValue("@updatedby", Form1.sessionUser("UserID"))
+            MyAdapter.UpdateCommand = MyCommand
+            Dim result As Integer = MyCommand.ExecuteNonQuery()
+            If result Then
+            Else
+                MessageBox.Show("Failed to update stock. " & prodid & " - " & qty, "Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                success = False
+            End If
+            MyCon.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+        Return success
+    End Function
 
 End Class

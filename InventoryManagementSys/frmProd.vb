@@ -67,6 +67,7 @@ Public Class frmProd
     End Sub
 
     Private Sub DataGridView1_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        lockObject()
         Dim iRowIndex As Integer
         Dim productID As Integer
 
@@ -137,6 +138,26 @@ Public Class frmProd
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Try
             If (MyCon.State = ConnectionState.Open) Then MyCon.Close()
+
+            'check transaction orders if product exist
+            Dim purchaseExist As Boolean = False
+            MyCon.Open()
+            Dim command As New MySqlCommand("SELECT ProductID FROM purchase_products WHERE ProductID = @prodid LIMIT 1", MyCon)
+            command.Parameters.Clear()
+            command.Parameters.AddWithValue("@prodid", txtId.Text)
+            MyAdapter.SelectCommand = command
+            Using MySQLData As MySqlDataReader = command.ExecuteReader
+                If MySQLData.HasRows Then
+                    purchaseExist = True
+                End If
+            End Using
+            MyCon.Close()
+
+            If purchaseExist Then
+                MessageBox.Show("Unable to delete because this product has existing transaction", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
             Dim result = MessageBox.Show("Are you sure you want to delete this product?", "DELETE", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
             If result = DialogResult.No Then
                 MessageBox.Show("Action Canceled.")

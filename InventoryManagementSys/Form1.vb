@@ -2,6 +2,7 @@
 Public Class Form1
     Public Property sessionUser As New Dictionary(Of String, Object)
     Public Shared ReadOnly roles() As String = {"", "Admin", "Manager", "Staff", "Owner"}
+    Public status() As String = {"", "Active", "Inactive", "Deleted", "Pending", "Received", "Cancelled", "Completed"}
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Application.Exit()
@@ -112,5 +113,14 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtUser.Select()
 
+    End Sub
+
+    Private Sub txtPassword_KeyDown(sender As Object, e As KeyEventArgs) Handles txtPassword.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            btnLogin_Click(Nothing, Nothing)
+        Else
+            Exit Sub
+        End If
+        e.SuppressKeyPress = True
     End Sub
 End Class

@@ -33,11 +33,18 @@ Public Class frmViewPurchase
             If Not cboStatus.SelectedItem Is Nothing Then
                 query = query & " AND e.Name = @status "
             End If
+            If Form1.roles(Form1.sessionUser("UserRoleID")) = "Staff" Then
+                query = query & " AND a.CreatedBy = @createdby "
+            End If
+
             query = query & " GROUP BY a.PurchaseID"
             Dim command As New MySqlCommand(query, MyCon)
             command.Parameters.AddWithValue("@search", "%" & searchQuery & "%")
             If Not cboStatus.SelectedItem Is Nothing Then
                 command.Parameters.AddWithValue("@status", searchStatus)
+            End If
+            If Form1.roles(Form1.sessionUser("UserRoleID")) = "Staff" Then
+                command.Parameters.AddWithValue("@createdby", Form1.sessionUser("UserID"))
             End If
             Dim adapter As New MySqlDataAdapter(command)
             Dim table As New DataTable()
@@ -59,7 +66,7 @@ Public Class frmViewPurchase
         getPurchaseID(True)
     End Sub
 
-    Private Sub btnUpdateStatus_Click(sender As Object, e As EventArgs) Handles btnUpdateStatus.Click
+    Private Sub btnUpdateStatus_Click(sender As Object, e As EventArgs)
         action = "update status"
         getPurchaseID(True)
     End Sub

@@ -233,7 +233,7 @@ Partial Class frmSales
         Me.cboStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.cboStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Items.AddRange(New Object() {"Pending", "Received", "Cancelled"})
+        Me.cboStatus.Items.AddRange(New Object() {"Completed"})
         Me.cboStatus.Location = New System.Drawing.Point(540, 396)
         Me.cboStatus.Name = "cboStatus"
         Me.cboStatus.Size = New System.Drawing.Size(107, 21)
