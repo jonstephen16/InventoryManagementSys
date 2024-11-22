@@ -155,11 +155,19 @@
     <Compile Include="frmSales.Designer.vb">
       <DependentUpon>frmSales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSales.vb" />
+    <Compile Include="frmSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmViewPurchase.Designer.vb">
       <DependentUpon>frmViewPurchase.vb</DependentUpon>
     </Compile>
     <Compile Include="frmViewPurchase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmViewSales.Designer.vb">
+      <DependentUpon>frmViewSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmViewSales.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -197,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmViewPurchase.resx">
       <DependentUpon>frmViewPurchase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmViewSales.resx">
+      <DependentUpon>frmViewSales.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

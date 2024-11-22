@@ -59,7 +59,7 @@ Partial Class frmProd
         Me.btnAddProd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAddProd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddProd.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnAddProd.Location = New System.Drawing.Point(593, 159)
+        Me.btnAddProd.Location = New System.Drawing.Point(603, 128)
         Me.btnAddProd.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddProd.Name = "btnAddProd"
         Me.btnAddProd.Size = New System.Drawing.Size(67, 23)
@@ -74,7 +74,7 @@ Partial Class frmProd
         Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDelete.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnDelete.Location = New System.Drawing.Point(593, 127)
+        Me.btnDelete.Location = New System.Drawing.Point(671, 181)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(67, 23)
@@ -89,7 +89,7 @@ Partial Class frmProd
         Me.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnUpdate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnUpdate.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnUpdate.Location = New System.Drawing.Point(593, 96)
+        Me.btnUpdate.Location = New System.Drawing.Point(600, 181)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
         Me.btnUpdate.Size = New System.Drawing.Size(67, 23)
@@ -139,7 +139,7 @@ Partial Class frmProd
         'btnSearch
         '
         Me.btnSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(154, 213)
+        Me.btnSearch.Location = New System.Drawing.Point(154, 184)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(77, 20)
@@ -150,7 +150,7 @@ Partial Class frmProd
         'txtSearch
         '
         Me.txtSearch.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSearch.Location = New System.Drawing.Point(8, 213)
+        Me.txtSearch.Location = New System.Drawing.Point(8, 184)
         Me.txtSearch.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSearch.Multiline = True
         Me.txtSearch.Name = "txtSearch"
@@ -159,15 +159,18 @@ Partial Class frmProd
         '
         'DataGridView1
         '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.DataGridView1.Location = New System.Drawing.Point(8, 237)
+        Me.DataGridView1.Location = New System.Drawing.Point(8, 209)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersWidth = 51
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(733, 182)
+        Me.DataGridView1.Size = New System.Drawing.Size(733, 210)
         Me.DataGridView1.TabIndex = 9
         '
         'Label2
@@ -175,7 +178,7 @@ Partial Class frmProd
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label2.Location = New System.Drawing.Point(83, 66)
+        Me.Label2.Location = New System.Drawing.Point(30, 65)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(74, 13)
@@ -187,7 +190,7 @@ Partial Class frmProd
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label3.Location = New System.Drawing.Point(63, 96)
+        Me.Label3.Location = New System.Drawing.Point(10, 125)
         Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(95, 13)
@@ -199,7 +202,7 @@ Partial Class frmProd
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label4.Location = New System.Drawing.Point(77, 129)
+        Me.Label4.Location = New System.Drawing.Point(517, 65)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(75, 13)
@@ -211,7 +214,7 @@ Partial Class frmProd
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label5.Location = New System.Drawing.Point(341, 96)
+        Me.Label5.Location = New System.Drawing.Point(279, 62)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(65, 13)
@@ -223,7 +226,7 @@ Partial Class frmProd
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label6.Location = New System.Drawing.Point(323, 129)
+        Me.Label6.Location = New System.Drawing.Point(261, 95)
         Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(86, 13)
@@ -235,7 +238,7 @@ Partial Class frmProd
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label7.Location = New System.Drawing.Point(364, 159)
+        Me.Label7.Location = New System.Drawing.Point(302, 125)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(34, 13)
@@ -245,7 +248,7 @@ Partial Class frmProd
         'txtId
         '
         Me.txtId.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtId.Location = New System.Drawing.Point(163, 66)
+        Me.txtId.Location = New System.Drawing.Point(110, 65)
         Me.txtId.Margin = New System.Windows.Forms.Padding(2)
         Me.txtId.Multiline = True
         Me.txtId.Name = "txtId"
@@ -255,7 +258,7 @@ Partial Class frmProd
         'txtProdname
         '
         Me.txtProdname.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtProdname.Location = New System.Drawing.Point(163, 96)
+        Me.txtProdname.Location = New System.Drawing.Point(110, 125)
         Me.txtProdname.Margin = New System.Windows.Forms.Padding(2)
         Me.txtProdname.Multiline = True
         Me.txtProdname.Name = "txtProdname"
@@ -265,17 +268,17 @@ Partial Class frmProd
         'txtDescription
         '
         Me.txtDescription.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDescription.Location = New System.Drawing.Point(163, 129)
+        Me.txtDescription.Location = New System.Drawing.Point(603, 65)
         Me.txtDescription.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDescription.Multiline = True
         Me.txtDescription.Name = "txtDescription"
-        Me.txtDescription.Size = New System.Drawing.Size(135, 61)
+        Me.txtDescription.Size = New System.Drawing.Size(135, 48)
         Me.txtDescription.TabIndex = 16
         '
         'txtPrice
         '
         Me.txtPrice.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPrice.Location = New System.Drawing.Point(417, 129)
+        Me.txtPrice.Location = New System.Drawing.Point(355, 95)
         Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
         Me.txtPrice.Multiline = True
         Me.txtPrice.Name = "txtPrice"
@@ -286,7 +289,7 @@ Partial Class frmProd
         '
         Me.cboCategory.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboCategory.FormattingEnabled = True
-        Me.cboCategory.Location = New System.Drawing.Point(417, 96)
+        Me.cboCategory.Location = New System.Drawing.Point(355, 62)
         Me.cboCategory.Margin = New System.Windows.Forms.Padding(2)
         Me.cboCategory.Name = "cboCategory"
         Me.cboCategory.Size = New System.Drawing.Size(135, 22)
@@ -296,7 +299,7 @@ Partial Class frmProd
         '
         Me.cboUnit.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboUnit.FormattingEnabled = True
-        Me.cboUnit.Location = New System.Drawing.Point(417, 159)
+        Me.cboUnit.Location = New System.Drawing.Point(355, 125)
         Me.cboUnit.Margin = New System.Windows.Forms.Padding(2)
         Me.cboUnit.Name = "cboUnit"
         Me.cboUnit.Size = New System.Drawing.Size(135, 22)
@@ -309,7 +312,7 @@ Partial Class frmProd
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.Black
-        Me.Button1.Location = New System.Drawing.Point(593, 66)
+        Me.Button1.Location = New System.Drawing.Point(529, 181)
         Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(67, 23)
@@ -320,7 +323,7 @@ Partial Class frmProd
         'txtSku
         '
         Me.txtSku.Font = New System.Drawing.Font("MingLiU-ExtB", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSku.Location = New System.Drawing.Point(417, 67)
+        Me.txtSku.Location = New System.Drawing.Point(110, 95)
         Me.txtSku.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSku.Multiline = True
         Me.txtSku.Name = "txtSku"
@@ -332,7 +335,7 @@ Partial Class frmProd
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label8.Location = New System.Drawing.Point(362, 66)
+        Me.Label8.Location = New System.Drawing.Point(55, 94)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(36, 13)

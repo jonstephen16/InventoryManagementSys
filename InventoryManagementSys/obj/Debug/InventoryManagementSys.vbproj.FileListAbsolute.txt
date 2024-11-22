@@ -48,3 +48,4 @@ C:\Users\User\Documents\InventoryManagementSys\InventoryManagementSys\obj\Debug\
 C:\Users\User\Documents\InventoryManagementSys\InventoryManagementSys\obj\Debug\InventoryManagementSys.frmSales.resources
 C:\Users\User\Documents\InventoryManagementSys\InventoryManagementSys\obj\Debug\InventoryManagementSys.frmViewPurchase.resources
 C:\Users\User\Documents\InventoryManagementSys\InventoryManagementSys\obj\Debug\InventoryManagementSys.frmAddPurchase.resources
+C:\Users\User\Documents\InventoryManagementSys\InventoryManagementSys\obj\Debug\InventoryManagementSys.frmViewSales.resources

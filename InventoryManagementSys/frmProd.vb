@@ -36,7 +36,7 @@ Public Class frmProd
     End Sub
 
     Private Function ValidateFields() As Boolean
-        Return Not (String.IsNullOrEmpty(txtId.Text) Or String.IsNullOrEmpty(txtProdname.Text) Or String.IsNullOrEmpty(txtDescription.Text) Or cboCategory.SelectedItem Is Nothing Or String.IsNullOrEmpty(txtPrice.Text) Or cboUnit.SelectedItem Is Nothing)
+        Return Not (String.IsNullOrEmpty(txtId.Text) Or String.IsNullOrEmpty(txtSku.Text) Or String.IsNullOrEmpty(txtProdname.Text) Or cboCategory.SelectedItem Is Nothing Or String.IsNullOrEmpty(txtPrice.Text) Or cboUnit.SelectedItem Is Nothing)
     End Function
 
     Private Sub ClearFields()
@@ -53,8 +53,9 @@ Public Class frmProd
         Try
             searchQuery = txtSearch.Text.Trim
             MyCon.Open()
-            Dim command As New MySqlCommand("SELECT ProductID as `PRODUCT ID`, Sku as `SKU`, P.Name as `NAME`, Category as `CATEGORY`, SellingPrice as `SELLING PRICE`, Unit as `UNIT`, S.Name as `STATUS`, IF(DateUpdated IS NULL, DateCreated, DateUpdated) as `LAST DATE UPDATED` FROM `products` as P  INNER JOIN status as S ON S.StatusID = P.Status WHERE P.Name LIKE '%" & searchQuery & "%' OR P.ProductID = '" & searchQuery & "'", MyCon)
+            Dim command As New MySqlCommand("SELECT ProductID as `PRODUCT ID`, Sku as `SKU`, P.Name as `NAME`, Category as `CATEGORY`, SellingPrice as `SELLING PRICE`, Unit as `UNIT`, S.Name as `STATUS`, IF(DateUpdated IS NULL, DateCreated, DateUpdated) as `LAST DATE UPDATED` FROM `products` as P  INNER JOIN status as S ON S.StatusID = P.Status WHERE P.Name LIKE @search OR P.Sku LIKE @search ", MyCon)
             Dim adapter As New MySqlDataAdapter(command)
+            command.Parameters.AddWithValue("@search", "%" & searchQuery & "%")
             Dim table As New DataTable()
             adapter.Fill(table)
             DataGridView1.DataSource = table
@@ -66,6 +67,7 @@ Public Class frmProd
     End Sub
 
     Private Sub DataGridView1_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        lockObject()
         Dim iRowIndex As Integer
         Dim productID As Integer
 
@@ -136,6 +138,26 @@ Public Class frmProd
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Try
             If (MyCon.State = ConnectionState.Open) Then MyCon.Close()
+
+            'check transaction orders if product exist
+            Dim purchaseExist As Boolean = False
+            MyCon.Open()
+            Dim command As New MySqlCommand("SELECT ProductID FROM purchase_products WHERE ProductID = @prodid LIMIT 1", MyCon)
+            command.Parameters.Clear()
+            command.Parameters.AddWithValue("@prodid", txtId.Text)
+            MyAdapter.SelectCommand = command
+            Using MySQLData As MySqlDataReader = command.ExecuteReader
+                If MySQLData.HasRows Then
+                    purchaseExist = True
+                End If
+            End Using
+            MyCon.Close()
+
+            If purchaseExist Then
+                MessageBox.Show("Unable to delete because this product has existing transaction", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
             Dim result = MessageBox.Show("Are you sure you want to delete this product?", "DELETE", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
             If result = DialogResult.No Then
                 MessageBox.Show("Action Canceled.")

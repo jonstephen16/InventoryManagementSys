@@ -1,19 +1,24 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class Form1
     Public Property sessionUser As New Dictionary(Of String, Object)
-    Public Shared ReadOnly roles() As String = {"", "Admin", "Manager", "Staff"}
+    Public Shared ReadOnly roles() As String = {"", "Admin", "Manager", "Staff", "Owner"}
+    Public status() As String = {"", "Active", "Inactive", "Deleted", "Pending", "Received", "Cancelled", "Completed"}
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Application.Exit()
     End Sub
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        If MyCon.State = ConnectionState.Open Then
+            MyCon.Close()
+        End If
         Try
             Static Dim counter As Integer
             If (txtUser.Text = "") Then
                 MsgBox("Enter username.", MsgBoxStyle.Critical, "Required")
                 txtUser.BackColor = Color.FromArgb(240, 240, 20)
                 txtUser.Select()
+
                 Exit Sub
             ElseIf (txtPassword.Text = "") Then
                 MsgBox("Enter password.", MsgBoxStyle.Critical, "Required")
@@ -24,11 +29,15 @@ Public Class Form1
                 counter = counter + 1 '3
                 MyCon.Open()
                 MyCommand.Connection = MyCon
-                MyCommand.CommandText = "SELECT *  FROM users WHERE Username='" & txtUser.Text.Trim & "' AND Password='" & getSHA1Hash(txtPassword.Text) & "'"
+                MyCommand.CommandText = "SELECT *  FROM users WHERE Username=@username AND Password=@password"
+                MyCommand.Parameters.Clear()
+                MyCommand.Parameters.AddWithValue("@username", txtUser.Text.Trim)
+                MyCommand.Parameters.AddWithValue("@password", getSHA1Hash(txtPassword.Text))
                 MyAdapter.SelectCommand = MyCommand
                 Dim MySQLData As MySqlDataReader = MyCommand.ExecuteReader
 
                 If MySQLData.HasRows = 0 Then '1
+
 
                     If counter = 3 Then
                         MessageBox.Show("You have reached your maximum login attempts. The program will now end.", "Error Login!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -84,14 +93,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
-
-    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
-
-    End Sub
-
     Function getSHA1Hash(ByVal strToHash As String) As String
 
         Dim sha1Obj As New Security.Cryptography.SHA1CryptoServiceProvider
@@ -108,4 +109,18 @@ Public Class Form1
         Return strResult
 
     End Function
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        txtUser.Select()
+
+    End Sub
+
+    Private Sub txtPassword_KeyDown(sender As Object, e As KeyEventArgs) Handles txtPassword.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            btnLogin_Click(Nothing, Nothing)
+        Else
+            Exit Sub
+        End If
+        e.SuppressKeyPress = True
+    End Sub
 End Class
